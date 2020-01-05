@@ -1,3 +1,5 @@
+# --------> SlowJack <--------
+## Es un testeador de denegación de servicio HTTP que afecta a servidores enhebrados.
 ![alt text](https://raw.githubusercontent.com/neo-jack-official/SlowJack/master/Imagenes/Vista01.png)
 ![alt text](https://raw.githubusercontent.com/neo-jack-official/SlowJack/master/Imagenes/vista02.png)
 # slowjack.py - SlowJack es un remake (nueva version) de SlowLoris, re editado por Neo-Jack DIC/2019
