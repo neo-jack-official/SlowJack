@@ -23,6 +23,7 @@ Si la red TOR no es encontrada, se le notificara, de cualquier forma usted puede
 Cuando usted inicia SlowJack, se le informara su IP-HOST, Usualmente es 12.0.0.1.
 Si su red TOR corre bajo el mismo IP-HOST, no tendra problemas.
 Si su IP-HOST es distinta a 12.0.0.1
+.
 ![alt text](https://raw.githubusercontent.com/neo-jack-official/SlowJack/master/Imagenes/iphost.png)
 
 	1) Abra slowjack.py con algun editor de texto
