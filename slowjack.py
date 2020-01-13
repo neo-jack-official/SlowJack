@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-#Edicion Modificada por Neo-Jack Ene/2020
+# -*- coding: utf-8 -*-
+#Edicion Modificada por Neo-Jack Ene/2020 v2
 #SlowJack its a remake of SlowLoris
 import click    
 import argparse
@@ -12,7 +13,9 @@ import sys
 import time
 from colorama import Fore, Back, Style 
 import urllib2
-
+from urllib2 import urlopen
+import re
+import json
 
 parser = argparse.ArgumentParser(
     description="SlowJack, herramienta de prueba de esfuerzo de bajo ancho de banda para sitios web"
@@ -190,14 +193,29 @@ if args.tor is False:
 def main():
     ip = args.host
     socket_count = args.sockets
+
+    url = 'http://ipinfo.io/json'
+    response = urlopen(url)
+    data = json.load(response)
+
+    IP = data['ip']
+    proveedor = data['org']
+    ciudad = data['city']
+    pais = data['country']
+    region = data['region']
+
     logging.info(Fore.GREEN + Style.BRIGHT + "Tu Host Actual es: " + socket.gethostbyname(socket.gethostname()) + Style.RESET_ALL)
     if args.tor is True:
        logging.info(Fore.GREEN + Style.BRIGHT + "Conexion TOR: " + Style.RESET_ALL + Back.GREEN + "Activada" + Style.RESET_ALL)
        logging.info(Fore.GREEN + Style.BRIGHT + "Nueva Tor-IP Externa: "+ Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + tor_ip + Style.RESET_ALL)
+       logging.info(Fore.GREEN + Style.BRIGHT + 'La Ubicacion de tu IP es: ' + Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + ciudad + ", " + region + ", " + pais + ". " + Style.RESET_ALL)
+       logging.info(Fore.GREEN + Style.BRIGHT + 'Tu Proveedor ISP es: ' + Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + proveedor + ". " + Style.RESET_ALL)
        logging.info(Fore.GREEN + Style.BRIGHT + "NOTA: " + Style.RESET_ALL + Fore.YELLOW + Style.BRIGHT + "Todo parece en orden, comencemos... " + Style.RESET_ALL )
     if args.tor is False:
        logging.info(Fore.GREEN + Style.BRIGHT + "Conexion TOR: " + Style.RESET_ALL + Back.RED + "Desactivado"+ Style.RESET_ALL + Fore.GREEN + Style.BRIGHT + " o " + Style.RESET_ALL + Back.RED + "NO Encontrada" + Style.RESET_ALL)
        logging.info(Fore.GREEN + Style.BRIGHT + "Tu IP Externo es: "+ Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + regular_ip + Style.RESET_ALL)
+       logging.info(Fore.GREEN + Style.BRIGHT + 'La Ubicacion de tu IP es: ' + Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + ciudad + ", " + region + ", " + pais + ". " + Style.RESET_ALL)
+       logging.info(Fore.GREEN + Style.BRIGHT + 'Tu Proveedor ISP es: ' + Style.RESET_ALL + Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + proveedor + ". " + Style.RESET_ALL)
        logging.info(Back.MAGENTA + Fore.YELLOW + Style.BRIGHT + "Utilice siempre una conexion VPN..." + Style.RESET_ALL)
        logging.info(Fore.YELLOW + Style.BRIGHT + "Si usted no cuenta con VPN y/o TOR" + Style.RESET_ALL)
        logging.info(Fore.YELLOW + Style.BRIGHT + "NO se arriesgue y NO utilice este progrema." + Style.RESET_ALL)
