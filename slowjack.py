@@ -171,7 +171,7 @@ if args.tor is True:
     socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, '127.0.0.1', 9050) 
     socket.socket = socks.socksocket
     try:
-        logging.info(Back.CYAN + Fore.YELLOW + Style.BRIGHT + "Comprabando la Seguridad de su RED..." + Style.RESET_ALL) 
+        logging.info(Back.CYAN + Fore.YELLOW + Style.BRIGHT + "Comprobando la Seguridad de su RED..." + Style.RESET_ALL) 
         tor_ip = requests.get(ipcheck_url) 
         tor_ip = str(tor_ip.text) 
     except requests.exceptions.RequestException as e:
@@ -180,7 +180,7 @@ if args.tor is True:
 if args.tor is False: 
     ipcheck_url2 = 'http://canihazip.com/s' 
     try: 
-        logging.info(Back.CYAN + Fore.YELLOW + Style.BRIGHT + "Comprabando la Seguridad de su RED..." + Style.RESET_ALL)  
+        logging.info(Back.CYAN + Fore.YELLOW + Style.BRIGHT + "Comprobando la Seguridad de su RED..." + Style.RESET_ALL)  
         regular_ip = requests.get(ipcheck_url2) 
         regular_ip = str(regular_ip.text) 
 
