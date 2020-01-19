@@ -15,8 +15,7 @@ Esto llena el cupo de peticiones del servidor inundandolo y evita que pueda resp
 ## Seguridad de SlowJack
 
 SlowJack cuenta con un verificador de seguridad para su proteccion.
-Por defecto busca una red TOR, para establecer una neuva conexion y cuidar su anonimato.
-Si la red TOR no es encontrada, se le notificara, de cualquier forma usted puede continuar usando SlowJack, si asi lo desea.
+notificando si esta en una red TOR.
 
 ## Problemas con mi red TOR.
 # Tengo red TOR y SlowJack no la encuentra.
@@ -73,7 +72,7 @@ Luego puede usar la opción `-x` para activar el soporte SOCKS5 y las opciones` 
 * `--proxy-port = Usar SOCKS5 proxy port`
 * `--https = Usar HTTPS para la peticion`
 * `--sleeptime = Tiempo de descanso entre cada envio header. por defecto: 15` recomendado (entre 10 a 15 seg)
-* `-T = Habilitar el enrutamiento TOR, por defecto: Activado`
+* `-T = Habilitar el enrutamiento TOR, por defecto: Desactivado`
 
 ## Como lo utilizo?
 
@@ -94,33 +93,7 @@ Para reducir tiempo entre Headers a 10 Seg.
   Combinando comandos:
 * `python slowjack.py www.ejemplo.com -s 180 --sleeptime 10`
 
-
-
-* `-p = Puerto, por defecto : 80`
-* `-s = Clientes, por defecto : 150` recomendacion (entre 100 a 200)
-* `-v = Muetsra clientes creados, por defecto : Activado`
-* `-ua = Navegadores Aleatorios, por defecto: Activado`
-* `-x = Usar SOCKS5 proxy para conectar`
-* `--proxy-host = Usar SOCKS5 proxy host`
-* `--proxy-port = Usar SOCKS5 proxy port`
-* `--https = Usar HTTPS para la peticion`
-* `--sleeptime = Tiempo de descanso entre cada envio header. por defecto: 15` recomendado (entre 10 a 15 seg)
-* `-T = Habilitar el enrutamiento TOR, por defecto: Activado`
-
-## Como lo utiliso?
-
-Si `slowjack.py` esta en Escritorio
-1) Abra terminal, Escriba `cd Escritorio`
-2) Ejecute bajo Python `python slowjack.py www.ejemplo.com`
-
-## Ejemplos de comandos.
-
-  Cambiando cantidad de Clientes:
-* `python slowjack.py www.ejemplo.com -s 180` Para 180 Clientes
-  Cambiando tiempo de espera entre Headers:
-* `python slowjack.py www.ejemplo.com --sleeptime 10` Para reducir tiempo entre Headers a 10 Seg.
-  Combinando comandos:
-* `python slowjack.py www.ejemplo.com -s 180 --sleeptime 10`
-
+  Activando Tor:
+* `python slowjack.py www.ejemplo.com -T`
 
 
