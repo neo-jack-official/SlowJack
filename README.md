@@ -17,23 +17,8 @@ Esto llena el cupo de peticiones del servidor inundandolo y evita que pueda resp
 SlowJack cuenta con un verificador de seguridad para su proteccion.
 notificando si esta en una red TOR.
 
-## Problemas con mi red TOR.
-# Tengo red TOR y SlowJack no la encuentra.
-Cuando usted inicia SlowJack, se le informara su IP-HOST, Usualmente es 12.0.0.1.
-Si su red TOR corre bajo el mismo IP-HOST, no tendra problemas.
-Si su IP-HOST es distinta a 12.0.0.1
-.
-![alt text](https://raw.githubusercontent.com/neo-jack-official/SlowJack/master/Imagenes/iphost.png)
 
-	1) Abra slowjack.py con algun editor de texto
-	2) busque la siguiente linea de comandos:
-	    * `socks.setdefaultproxy(socks.PROXY_TYPE_SOCKS5, '127.0.0.1', 9050)`
-	3) Remplace "127.0.0.1"
-	   por la IP-HOST que le muestra SlowJack, cuando lo corre desde terminal.
-	4) Guarde SlowJack.py
-
-
-## Como Instalar y correr PYTHON?
+## Como Instalar PYTHON?
 
 Slowjack es un archivo con extencion "Py", solo requiere tener pre instalado Python.
 
@@ -48,17 +33,6 @@ Slowjack es un archivo con extencion "Py", solo requiere tener pre instalado Pyt
 ## Revisamos que python esta instalado correctamente
 
 * `python -V | python3 -V`
-
-
-### Soporte para proxy SOCKS5
-
-Si planea usar la opción `-x` para usar un proxy SOCKS5 para conectarse en lugar de una conexión directa a través de su dirección IP, deberá instalar la biblioteca` PySocks`.
- [`PySocks`] (https://github.com/Anorov/PySocks)
- [` SocksiPy`] (http://socksipy.sourceforge.net/) by GitHub @Anorov y puede ser instalado fácilmente por comando ` pip` 
-
-* `sudo pip3 install PySocks`
-
-Luego puede usar la opción `-x` para activar el soporte SOCKS5 y las opciones` --proxy-host` y `--proxy-port` para especificar el host proxy SOCKS5 y su puerto, si son diferentes del estándar` 127.0.0.1: 8080`.
 
 ## Opciones de Configuracion
 
